@@ -37,7 +37,7 @@ jobs:
         uses: actions/cache@v3
         id: cache
         with:
-          path: backend/node_modules
+          path: frontend/node_modules
           key: ${{ steps.cache-key.outputs.CACHE_KEY }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'

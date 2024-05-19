@@ -63,7 +63,7 @@ jobs:
           path: frontend/node_modules
           key: ${{ needs.install-deps.outputs.deps-cache-key }}
       - name: Testing
-        run: npm run test
+        run: npm test
       
 
  

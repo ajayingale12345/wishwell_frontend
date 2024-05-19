@@ -1,0 +1,20 @@
+<header>
+  <nav>
+    <div class="logo">
+      <a routerLink="/" class="link">WishWell</a>
+    </div>
+    <div class="menu">
+      <ul>
+        <li><a routerLink="/main" class="link">Campaigns</a></li>
+        <li><a routerLink="/contact" class="link">Contact Us</a></li>
+        <ng-container *ngIf="!isLoggedIn; else loggedIn">
+          <li><a routerLink="/login" class="link">Login</a></li>
+          <li><a routerLink="/register" class="link">Sign Up</a></li>
+        </ng-container>
+        <ng-template #loggedIn>
+          <li><a routerLink="/profile"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn-vEOJ-hZBcs1B-08vYnD_EsOyUJO8F3mBkgu7YAw6w&s" alt="Profile" class="profile-icon"></a></li>
+        </ng-template>
+      </ul>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,94 @@
+
+
+
+.login-container {
+    width: 100%;
+    max-width: 550px; 
+    border: palegreen;
+    border-radius: 10px; 
+    padding: 20px; 
+    background-color: #19b6b6;
+    box-shadow: 0 24px 28px rgba(14, 132, 140, 0.595);
+    width: 40%;
+}
+
+
+
+.login-form {
+    background-color: #19b6b6;
+    padding: 40px 40px 40px 60px; /* Adjusted padding with left padding added */
+    border-radius: 10px;
+    
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 60px); /* Adjusted width to accommodate left padding */
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #6b7280;
+    outline: none;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #fff; /* White color */
+}
+
+.login-form button {
+    margin: 0 auto; /* Center the button */
+    display: block; /* Ensure it takes full width */
+    padding: 14px 32px;
+    border: none;
+    border-radius: 6px;
+    background-color: #ffffff; /* Match contact form button color */
+    color: #19b6b6;
+    font-weight: bold;
+    cursor: pointer;
+    width: 40%;
+}
+
+.login-form button:hover {
+    background-color: #86fbff; /* Match contact form button hover color */
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .login-container {
+        margin-top: 5%; /* Adjusted margin-top for better positioning on smaller screens */
+    }
+
+    .login-form {
+        padding: 40px; /* Adjusted padding for smaller screens */
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        width: 100%; /* Make input fields occupy full width on smaller screens */
+    }
+
+    .login-form button {
+        margin: auto; /* Center the button */
+    }
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 60px;
+    height: 70vh;
+}
+
+.IMG{
+width: 40%;
+}

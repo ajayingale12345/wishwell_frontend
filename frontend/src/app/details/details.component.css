@@ -1,0 +1,138 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Container styles */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Heading styles */
+h1, h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+p{
+font-weight: bold;
+font-family: serif;
+}
+
+/* Campaign status styles */
+.status {
+  color: #19b6b6; /* Green color for active status */
+}
+
+/* Campaign details styles */
+.campaign-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+/* Left half styles */
+.left-half {
+  flex: 0 0 65%;
+}
+
+.campaign-description,
+.fundraiser-details,
+.donation-form,
+.progress-bar-container,
+.target-completed {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Right half styles */
+.right-half {
+  
+  flex: 0 0 30%;
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #19b6b6; /* Green color for submit button */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #15a3a3; /* Darker shade of green on hover */
+}
+
+/* Progress bar styles */
+progress {
+  width: 100%;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+/* Donations table styles */
+.donations-table {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .campaign-details {
+    flex-direction: column;
+  }
+
+  .left-half, .right-half {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

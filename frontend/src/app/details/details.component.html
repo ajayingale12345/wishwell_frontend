@@ -1,0 +1,84 @@
+<body>
+  <div class="container">
+    <h1>Campaign Details</h1>
+    <h2 class="status">{{campaign.status}}</h2>
+    <div class="campaign-details">
+      <div class="left-half">
+        <img src="https://source.unsplash.com/random/900x700/?${{campaign.title}}" alt="Description of the image" width="800" height="400"/>
+        <div class="campaign-description">
+          <h2>{{ campaign.title }}</h2>
+          <p> {{ campaign.description }}</p> <br>
+          <p>Amount needed : {{ campaign.goal_amount }}</p>
+          <p>current amount : {{ campaign.current_amount }}</p>
+          <p>Start Date: {{ campaign.start_date }}</p>
+          <p>End Date: {{ campaign.end_date }}</p>
+        </div>
+        <div class="fundraiser-details">
+          <h2>Fundraiser Details</h2>
+          <p>Cause: {{ campaign.cause }}</p>
+          <p>Beneficiary Name: {{ campaign.beneficiary_name }}</p>
+          <p>Beneficiary Age: {{ campaign.beneficiary_age }}</p>
+          <p>Beneficiary City: {{ campaign.beneficiary_city }}</p>
+          <p>Beneficiary Mobile: {{ campaign.beneficiary_mobile }}</p>
+        </div>
+      </div>
+      <div class="right-half">
+        <div *ngIf="campaign.status==='active' && getval()" class="donation-form">
+  
+  
+  
+          
+          <h2>Make a Donation for {{ campaign.title }}</h2>
+          <form (ngSubmit)="donate()">
+            <div class="form-group">
+              <label for="donationAmount">Amount:</label>
+              <input type="number" id="donationAmount" name="donationAmount" placeholder="Enter donation amount" required [(ngModel)]="donationAmount">
+            </div>
+            <div class="form-group">
+              <button type="submit">Donate</button>
+            </div>
+          </form>
+  
+          <div class="progress-bar-container">
+            <h2>Progress {{percent}}% </h2>
+            <progress max="100" [value]="calculateProgress()"></progress>
+          </div>
+          <div>
+            Need : {{campaign.goal_amount - campaign.current_amount }} Rs 
+          </div>
+  
+  
+        </div>
+        <div *ngIf="!(campaign.status==='active') || !getval()" class="target-completed">
+  
+            <h2>Not accepting any donation now</h2>
+      
+        </div>
+  
+  
+  
+      </div>
+      
+    </div>
+  
+    <div class="donations-table">
+      <h2>Donations</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Donor Name</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through donations array and display each donation -->
+          <tr *ngFor="let donation of donations">
+            <td>{{ donation.donor_name }}</td>
+            <td>{{ donation.amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  </body>

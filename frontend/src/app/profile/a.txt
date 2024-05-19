@@ -1,0 +1,217 @@
+<div class="container">
+  <div class="sidebar">
+    <ul>
+      <li (click)="profile()">Profile</li>
+      <li (click)="showDonations()">Donations</li>
+      <li (click)="showBalance()">Balance</li>
+      <li *ngIf="userProfile.role === 'fundraiser'" (click)="CreateCampaign()">Create Campaign</li>
+      <li *ngIf="userProfile.role === 'fundraiser'" (click)="showMyCampaigns()">My Campaigns</li>
+      <li (click)="logout()">Logout</li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <div [ngSwitch]="selectedOption">
+      <div *ngSwitchCase="'profile'">
+        <!-- Profile details template -->
+        <h2>Profile Details</h2>
+      
+        <!-- Name field with edit option -->
+        <div *ngIf="!editMode.name">
+          <span>Name: {{ userProfile.name }}</span>
+          <button (click)="toggleEditMode('name')">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+        </div>
+        <div *ngIf="editMode.name">
+          <input type="text" [(ngModel)]="userProfile.name">
+          <button (click)="saveChanges('name')">Save</button>
+          <button (click)="cancelEdit('name')">Cancel</button>
+        </div>
+      
+        <!-- Email field with edit option -->
+        <div *ngIf="!editMode.email">
+          <span>Email: {{ userProfile.email }}</span>
+          <button (click)="toggleEditMode('email')">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+        </div>
+        <div *ngIf="editMode.email">
+          <input type="email" [(ngModel)]="userProfile.email">
+          <button (click)="saveChanges('email')">Save</button>
+          <button (click)="cancelEdit('email')">Cancel</button>
+        </div>
+      
+        <!-- Date of Birth field with edit option -->
+        <div *ngIf="!editMode.dob">
+          <span>Date of Birth: {{ userProfile.dob }}</span>
+          <button (click)="toggleEditMode('dob')">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+        </div>
+        <div *ngIf="editMode.dob">
+          <input type="date" [(ngModel)]="userProfile.dob">
+          <button (click)="saveChanges('dob')">Save</button>
+          <button (click)="cancelEdit('dob')">Cancel</button>
+        </div>
+      
+        <!-- Sex field with edit option -->
+        <div *ngIf="!editMode.sex">
+          <span>Sex: {{ userProfile.sex }}</span>
+          <button (click)="toggleEditMode('sex')">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+        </div>
+        <div *ngIf="editMode.sex">
+          <select [(ngModel)]="userProfile.sex">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <button (click)="saveChanges('sex')">Save</button>
+          <button (click)="cancelEdit('sex')">Cancel</button>
+        </div>
+      
+        <!-- Age field with edit option -->
+        <div *ngIf="!editMode.age">
+          <span>Age: {{ userProfile.age }}</span>
+          <button (click)="toggleEditMode('age')">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+        </div>
+        <div *ngIf="editMode.age">
+          <input type="number" [(ngModel)]="userProfile.age">
+          <button (click)="saveChanges('age')">Save</button>
+          <button (click)="cancelEdit('age')">Cancel</button>
+        </div>
+      
+        <!-- PAN field with edit option -->
+        <div *ngIf="!editMode.pan">
+          <span>PAN: {{ userProfile.pan }}</span>
+          <button (click)="toggleEditMode('pan')">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+        </div>
+        <div *ngIf="editMode.pan">
+          <input type="text" [(ngModel)]="userProfile.pan">
+          <button (click)="saveChanges('pan')">Save</button>
+          <button (click)="cancelEdit('pan')">Cancel</button>
+        </div>
+      
+        <!-- Balance field with edit option -->
+        <div *ngIf="!editMode.balance">
+          <span>Balance: {{ userProfile.balance }}</span>
+          <button (click)="toggleEditMode('balance')">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+        </div>
+        <div *ngIf="editMode.balance">
+          <!-- Replace with appropriate input field for balance -->
+          <input type="text" [(ngModel)]="userProfile.balance">
+          <button (click)="saveChanges('balance')">Save</button>
+          <button (click)="cancelEdit('balance')">Cancel</button>
+        </div>
+      
+        <!-- Add other profile fields with edit options here -->
+      </div>
+      
+      <div *ngSwitchCase="'donations'">
+        <!-- Donations template -->
+        <h2>Donations</h2>
+        <ul>
+          <li *ngFor="let donation of donations">{{ donation }}</li>
+        </ul>
+      </div>
+      <div *ngSwitchCase="'balance'">
+        <!-- Balance template -->
+        <h2>Balance</h2>
+        <p>Total Balance: {{ totalBalance }}</p>
+      </div>
+        <div *ngSwitchCase="'CreateCampaign'" class="campaign-form">
+        <!-- Create Campaign form -->
+        <h2>Create Campaign</h2>
+        <form (ngSubmit)="createCampaignEntry()">
+            <!-- Cause field -->
+            <div class="form-group">
+            <label for="cause">Cause:</label>
+            <input type="text" id="cause" name="cause" [(ngModel)]="campaignData.cause" required>
+            </div>
+
+            <!-- Title field -->
+            <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" [(ngModel)]="campaignData.title" required>
+            </div>
+
+            <!-- Description field -->
+            <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" [(ngModel)]="campaignData.description" required></textarea>
+            </div>
+
+            <!-- Goal Amount field -->
+            <div class="form-group">
+            <label for="goalAmount">Goal Amount:</label>
+            <input type="number" id="goalAmount" name="goalAmount" [(ngModel)]="campaignData.goalAmount" required>
+            </div>
+
+            <!-- Start Date field -->
+            <div class="form-group">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate" [(ngModel)]="campaignData.startDate" required>
+            </div>
+
+            <!-- End Date field -->
+            <div class="form-group">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate" [(ngModel)]="campaignData.endDate" required>
+            </div>
+
+            <!-- Beneficiary Name field -->
+            <div class="form-group">
+            <label for="beneficiaryName">Beneficiary Name:</label>
+            <input type="text" id="beneficiaryName" name="beneficiaryName" [(ngModel)]="campaignData.beneficiaryName" required>
+            </div>
+
+            <!-- Beneficiary Age field -->
+            <div class="form-group">
+            <label for="beneficiaryAge">Beneficiary Age:</label>
+            <input type="number" id="beneficiaryAge" name="beneficiaryAge" [(ngModel)]="campaignData.beneficiaryAge" required>
+            </div>
+
+            <!-- Beneficiary City field -->
+            <div class="form-group">
+            <label for="beneficiaryCity">Beneficiary City:</label>
+            <input type="text" id="beneficiaryCity" name="beneficiaryCity" [(ngModel)]="campaignData.beneficiaryCity" required>
+            </div>
+
+            <!-- Beneficiary Mobile field -->
+            <div class="form-group">
+            <label for="beneficiaryMobile">Beneficiary Mobile:</label>
+            <input type="tel" id="beneficiaryMobile" name="beneficiaryMobile" [(ngModel)]="campaignData.beneficiaryMobile" required>
+            </div>
+
+            <!-- Buttons to submit or cancel -->
+            <button type="submit">Start Campaign</button>
+            <button type="button" (click)="cancelCreateCampaign()">Cancel</button>
+        </form>
+        </div>
+      
+      <div *ngSwitchCase="'myCampaigns'">
+        <h2>My Campaigns</h2>
+        <div class="campaign-cards">
+          <!-- Campaign cards will be rendered here -->
+          <div class="campaign-card" *ngFor="let campaign of userCampaigns">
+            <h3>{{ campaign.title }}</h3>
+            <p>Description: {{ campaign.description }}</p>
+            <p>Goal Amount: {{ campaign.goalAmount }}</p>
+            <p>Start Date: {{ campaign.startDate }}</p>
+            <p>End Date: {{ campaign.endDate }}</p>
+            <button >Edit</button>
+            <button >Delete</button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

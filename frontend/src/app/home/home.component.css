@@ -1,0 +1,160 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+
+/* Hero section */
+/* Add this CSS for the hero section */
+
+.hero {
+  background-color: #ffffff;
+  margin-top: 4px;
+  padding: 120px 0; /* Adjust the top and bottom padding to increase the height */
+  text-align: center;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.hero-image img {
+  margin-top: 10px;
+  height: auto;
+  width: 1000px;
+}
+
+.hero-text {
+  flex: 1;
+  padding: 0 20px;
+  text-align: center;
+  margin-left: -500px; /* Adjust this value to move the text closer to the image */
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #19b6b6;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+
+/* About section */
+/* About section */
+.about {
+  background-color: #19b6b6;
+  padding: 80px 0;
+  text-align: center;
+  margin-left: -10px;
+  margin-right: -10px;
+  box-shadow: 0 0 160px rgba(0, 164, 170, 0.5); /* Adjust the shadow to control the fading effect */
+}
+.about h2 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.about p {
+  font-size: 1.1rem;
+  color: #f9fafa;
+  margin-bottom: 30px;
+}
+
+
+/* Features section */
+.features {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.features .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.feature {
+  flex: 1;
+  margin: 0 10px;
+  text-align: left;
+}
+
+.feature h3 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.container {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.feature-card {
+  background-color: white;
+  border: 2px solid #19b6b6;
+  border-radius: 8px;
+  padding: 20px;
+  width: calc(33.33% - 20px); /* Adjust width as needed for responsiveness */
+}
+
+.feature-card h3 {
+  color: #19b6b6;
+  padding: 10px;
+}
+
+.feature-card p {
+  padding: 10px;
+  color: #555;
+}
+
+.aboutcontainer{
+ display: flex;
+ flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.aboutcontainer p{
+  width: 60%;
+}

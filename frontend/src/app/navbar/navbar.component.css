@@ -1,0 +1,68 @@
+/* Resetting default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styling the header */
+header {
+  background-color: #ffffff; /* You can change this color as per your design */
+  padding: 10px 20px;
+  margin-left: -10px;
+  margin-right: -10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for a raised effect */
+}
+
+/* Styling the navigation */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Styling the logo */
+.logo {
+  font-weight: bolder;
+  font-size: 26px;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #19b6b6; /* You can change this color as per your design */
+}
+
+/* Styling the menu */
+.menu ul {
+  list-style-type: none;
+  display: flex;
+}
+
+.menu ul li {
+  margin-right: 40px; 
+}
+
+.menu ul li:last-child {
+  margin-right: 0;
+}
+
+.menu ul li a {
+  font-weight: bolder;
+  text-decoration: none;
+  color: #19b6b6; /* You can change this color as per your design */
+}
+
+/* Styling the active link */
+.menu ul li a.active {
+  font-weight: bold; /* You can change this style as per your design */
+}
+
+/* Styling for when user is logged in */
+.menu ul li.hide-when-logged-in {
+  display: none; /* Hides login and sign up links when user is logged in */
+}
+.profile-icon {
+  margin: -5px;
+  width: 35px; /* Adjust the width as needed */
+  height: auto; /* To maintain aspect ratio */
+}

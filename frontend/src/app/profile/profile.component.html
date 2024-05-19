@@ -1,0 +1,276 @@
+<!-- profile.component.html -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- profile.component.html -->
+<div class="container">
+  <div class="sidebar">
+    <ul>
+      <li (click)="profile()">Profile</li>
+      <li (click)="showDonations()">Donations</li>
+      <li (click)="showBalance()">Balance</li>
+      <li *ngIf="userProfile.role === 'fundraiser'" (click)="CreateCampaign()">Create Campaign</li>
+      <li *ngIf="userProfile.role === 'fundraiser'" (click)="showMyCampaigns()">My Campaigns</li>
+      <li (click)="logout()">Logout</li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <div [ngSwitch]="selectedOption">
+      
+      <div *ngSwitchCase="'profile'">
+        <!-- Profile details template -->
+        <h2>Profile Details</h2>
+      
+        <!-- Name field with edit option -->
+        <div *ngIf="!editMode.name">
+          <span>Name: {{ userProfile.name }}
+
+            <i (click)="toggleEditMode('name')" class="fas fa-pencil-alt"></i>
+          </span>
+
+        </div>
+
+
+        <div *ngIf="editMode.name">
+          <input type="text" [(ngModel)]="userProfile.name">
+          <button (click)="saveChanges('name')">Save</button>
+          <button (click)="cancelEdit('name')">Cancel</button>
+        </div>
+      
+        <!-- Email field -->
+        <div *ngIf="!editMode.email">
+          <span>Email: {{ userProfile.email }}</span>
+        </div>
+      
+        <!-- Date of Birth field -->
+        <div *ngIf="!editMode.dob">
+          <span>Date of Birth: {{ userProfile.dob || 'N/A' }}</span>
+        </div>
+      
+        <!-- Sex field -->
+        <div *ngIf="!editMode.sex">
+          <span>Sex: {{ userProfile.sex }}</span>
+        </div>
+      
+        <!-- Age field -->
+        <div *ngIf="!editMode.age">
+          <span>Age: {{ userProfile.age }}</span>
+        </div>
+      
+        <!-- PAN field -->
+        <div *ngIf="!editMode.pan">
+          <span>PAN: {{ userProfile.pan }}</span>
+        </div>
+      
+        <!-- Balance field -->
+        <div>
+          <span>Balance: {{ userProfile.balance }}</span>
+        </div>
+      
+        <!-- Address field -->
+        <div *ngIf="!editMode.address">
+          <span>Address: {{ userProfile.address || 'N/A' }}</span>
+        </div>
+      
+        <!-- City field -->
+        <div *ngIf="!editMode.city">
+          <span>City: {{ userProfile.city || 'N/A' }}</span>
+        </div>
+      
+        <!-- Role field -->
+        <div>
+          <span>Role: {{ userProfile.role }}</span>
+        </div>
+      
+        <!-- Description field -->
+        <div *ngIf="!editMode.description">
+          <span>Description: {{ userProfile.description || 'N/A' }}</span>
+        </div>
+      
+        <!-- Created At field -->
+        <div>
+          <span>Created At: {{ userProfile.created_at }}</span>
+        </div>
+
+        
+      <!-- PAN Form -->
+      <div *ngIf="showPanForm">
+        <h3>Add PAN to be a Fundraiser</h3>
+        <form>
+          <label for="panInput">PAN:</label>
+          <input type="text" id="panInput" name="panInput" [(ngModel)]="panNumber">
+          <button type="button" (click)="submitPan()">Submit</button>
+          <button type="button" (click)="closePanForm()">Cancel</button>
+        </form>
+      </div>
+
+      <!-- Button to add PAN -->
+      <div *ngIf="userProfile.role === 'donor' && !showPanForm">
+        <button (click)="showPanForm = true">Be a Fundraiser</button>
+      </div>
+
+        
+      </div>
+      
+      <div *ngSwitchCase="'donations'">
+        <!-- Donations template -->
+        <h2>Donations List</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Donation ID</th>
+              <th>Donor ID</th>
+              <th>Campaign ID</th>
+              <th>Amount</th>
+              <th>Transaction Date</th>
+
+              <th>Action</th>
+              <th>Recipt</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let donation of donations">
+              <td>{{ donation.id }}</td>
+              <td>{{ donation.donor_id }}</td>
+              <td>{{ donation.campaign_id }}</td>
+              <td>{{ donation.amount }}</td>
+              <td>{{ donation.transaction_date }}</td>
+              <td> <button (click)="visitCampaign(donation.campaign_id)" > Visit Donation </button> </td>
+              <td><button (click)="downloadReceipt(donation)"  >download</button></td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+
+      <div *ngSwitchCase="'balance'">
+        <!-- Balance template -->
+        <h2>Balance</h2>
+        <p>Total Balance: {{ totalBalance }}</p>
+        <!-- Add Balance -->
+        <div>
+          <label for="addBalance">Add Balance:</label>
+          <input class="balanceInp" type="number" id="addBalance" name="addBalance" [(ngModel)]="newBalance">
+          <button (click)="addBalance()">Add</button>
+        </div>
+      </div>
+
+        <div *ngSwitchCase="'CreateCampaign'" class="campaign-form">
+        <!-- Create Campaign form -->
+          <h2>Create Campaign</h2>
+          <form (ngSubmit)="createCampaignEntry()">
+              <!-- Cause field -->
+              <div class="form-group">
+                  <label for="cause">Cause:</label>
+                  <input type="text" id="cause" name="cause" [(ngModel)]="campaignData.cause" required>
+              </div>
+
+              <!-- Title field -->
+              <div class="form-group">
+                  <label for="title">Title:</label>
+                  <input type="text" id="title" name="title" [(ngModel)]="campaignData.title" required>
+              </div>
+
+              <!-- Description field -->
+              <div class="form-group">
+                  <label for="description">Description:</label>
+                  <textarea id="description" name="description" [(ngModel)]="campaignData.description" required></textarea>
+              </div>
+
+              <!-- Goal Amount field -->
+              <div class="form-group">
+                  <label for="goalAmount">Goal Amount:</label>
+                  <input class="balanceInp" type="number" id="goalAmount" name="goalAmount" [(ngModel)]="campaignData.goal_amount" required>
+              </div>
+
+              <!-- Start Date field -->
+              <div class="form-group">
+                  <label for="startDate">Start Date:</label>
+                  <input type="date" id="startDate" name="startDate" [(ngModel)]="campaignData.start_date" required>
+              </div>
+
+              <!-- End Date field -->
+              <div class="form-group">
+                  <label for="endDate">End Date:</label>
+                  <input type="date" id="endDate" name="endDate" [(ngModel)]="campaignData.end_date" required>
+              </div>
+
+              <!-- Beneficiary Name field -->
+              <div class="form-group">
+                  <label for="beneficiaryName">Beneficiary Name:</label>
+                  <input type="text" id="beneficiaryName" name="beneficiaryName" [(ngModel)]="campaignData.beneficiary_name" required>
+              </div>
+
+              <!-- Beneficiary Age field -->
+              <div class="form-group">
+                  <label for="beneficiaryAge">Beneficiary Age:</label>
+                  <input class="balanceInp" type="number" id="beneficiaryAge" name="beneficiaryAge" [(ngModel)]="campaignData.beneficiary_age" required>
+              </div>
+
+              <!-- Beneficiary City field -->
+              <div class="form-group">
+                  <label for="beneficiaryCity">Beneficiary City:</label>
+                  <input type="text" id="beneficiaryCity" name="beneficiaryCity" [(ngModel)]="campaignData.beneficiary_city" required>
+              </div>
+
+              <!-- Beneficiary Mobile field -->
+              <div class="form-group">
+                  <label for="beneficiaryMobile">Beneficiary Mobile:</label>
+                  <input class="balanceInp" type="tel" id="beneficiaryMobile" name="beneficiaryMobile" [(ngModel)]="campaignData.beneficiary_mobile" required>
+              </div>
+
+              <!-- Buttons to submit or cancel -->
+              <button type="submit">Start Campaign</button>
+              <button type="button" (click)="cancelCreateCampaign()">Cancel</button>
+          </form>
+        </div>
+      
+        <div class="ofhidden" *ngSwitchCase="'myCampaigns'">
+          <h2>My Campaigns</h2>
+          <div class="campaign-cards">
+            <!-- Campaign cards will be rendered here -->
+            <div class="campaign-card" *ngFor="let campaign of userCampaigns">
+              <h3 style="color: #00c5c5; font-size: 23px;">{{ campaign.title }}</h3>
+              <div *ngIf="!campaign.showFullDescription">
+                  <p class="desctext" style="font-size: 18px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; padding: 5px;">
+                      <strong>Description:</strong> {{ campaign.description | slice:0:100 }} <span *ngIf="campaign.description.length > 100">...</span>
+                  </p>
+                  <a (click)="toggleDescription(campaign)">See More</a>
+              </div>
+              <div *ngIf="campaign.showFullDescription">
+                  <p class="desctext" style="font-size: 18px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; padding: 5px;">
+                      <strong>Description:</strong> {{ campaign.description }}
+                  </p>
+                  <a (click)="toggleDescription(campaign)">See Less</a>
+              </div>
+              <br>
+              <p style="padding: 3px;"><strong>Goal Amount:</strong> {{ campaign.goal_amount }}</p>
+              <p style="padding: 3px;"><strong>Start Date:</strong> {{ campaign.start_date }}</p>
+              <p style="padding: 3px;"><strong>End Date:</strong> {{ campaign.end_date }}</p>
+              <!-- Additional details -->
+              <p style="padding: 3px;"><strong>Beneficiary Name:</strong> {{ campaign.beneficiary_name }}</p>
+              <p style="padding: 3px;"><strong>Beneficiary Age:</strong> {{ campaign.beneficiary_age }}</p>
+              <p style="padding: 3px;"><strong>Beneficiary City:</strong> {{ campaign.beneficiary_city }}</p>
+              <p style="padding: 3px;"><strong>Beneficiary Mobile:</strong> {{ campaign.beneficiary_mobile }}</p>
+              <p style="padding: 3px;"><strong>Status:</strong> {{ campaign.status }}</p>
+              <p style="padding: 3px;"><strong>Created At:</strong> {{ campaign.created_at }}</p>
+              <p style="padding: 3px;"><strong>Updated At:</strong> {{ campaign.updated_at }}</p>
+              <!-- Edit and Delete buttons -->
+          
+          
+            
+              <button *ngIf="campaign.status === 'active'" (click)="deactivateCampaign(campaign.id)" style="color: white; font-weight: bold;">Deactivate</button>
+              <button *ngIf="campaign.status === 'inactive'" (click)="activateCampaign(campaign.id)"  style="color: white; font-weight: bold;">Active</button>
+              <button *ngIf="campaign.status === 'pending'"  style="color: white; font-weight: bold;">Pending State</button>
+  
+  
+              <button (click)="deleteCampaign(campaign.id)" style="color: white; font-weight: bold;">Delete</button> 
+  
+            </div>
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+  

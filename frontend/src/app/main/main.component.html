@@ -1,0 +1,45 @@
+<div class="hero-section">
+  <img src="https://t3.ftcdn.net/jpg/02/01/21/24/360_F_201212416_HhywPD6KKww3qY3nORrIsGbLPFvUD8gK.jpg" alt="Hero Image">
+  <div class="hero-content">
+    <h1>Welcome to our Campaign Platform</h1>
+    <p>Explore and support campaigns that matter to you.</p>
+  </div>
+</div>
+
+
+
+
+
+<div class="camp">
+
+
+    <div class="first">
+    <div class="search-bar">
+        <input type="text" placeholder="Search for campaigns" [(ngModel)]="searchQuery" (input)="filterCampaigns()">
+        <i  class="fa fa-search searchSign" aria-hidden="true"></i>
+      </div>
+
+    <div class="campaigns">
+      <div class="donation-cards">
+        <div class="donation-card" *ngFor="let campaign of filteredCampaigns">
+          <img src="https://source.unsplash.com/random/900x700/?${{campaign.title}}" alt="Description of the image" />
+          <h2>{{ campaign.title }}</h2>
+          <p class="desctext">{{ campaign.description }}</p>
+          <p>Raised: ₹ {{ campaign.current_amount }}</p>
+          <p>Goal: ₹ {{ campaign.goal_amount }}</p>
+
+          <div class="progress-bar">
+            <div class="progress" [style.width]="calculateProgress(campaign) + '%'"></div>
+          </div>
+
+
+          <button (click)="goToDetailsPage(campaign.id)">Donate Now</button>
+        </div>
+      </div>
+    </div>
+    </div> 
+
+    <div class="poster">
+      <img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/charity-fundraising-design-template-979f7a8eb6f982343a8272b3ea7a44bb.jpg?ts=1708353240" alt="posterr">
+    </div>
+  </div>

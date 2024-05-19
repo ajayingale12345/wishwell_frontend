@@ -1,0 +1,105 @@
+.registration-container {
+    max-width: 550px;
+    width: 60%;
+    margin-bottom: 50px;
+    border: palegreen;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #19b6b6;
+    box-shadow: 0 24px 28px rgba(0, 141, 136, 0.623);
+ 
+}
+
+
+.registration-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.registration-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+.registration-subtitle {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.registration-form {
+    background-color: #19b6b6;
+    padding: 40px 40px 40px 60px; /* Adjusted padding with left padding added */
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px; /* Even gap between all fields */
+}
+
+
+label {
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+input[type="date"] {
+    width: calc(100% - 60px); /* Adjusted width to accommodate left padding */
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    color: #6b7280;
+    outline: none;
+}
+
+.form-actions {
+    text-align: center;
+}
+
+button {
+    padding: 14px 32px;
+    border: none;
+    border-radius: 6px;
+    background-color: #fffffff4;
+    color: #19b6b6;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #86fbff;
+}
+
+
+select#role,
+select#sex {
+    width: calc(100% - 13px); /* Adjusted width to accommodate left padding */
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #6b7280;
+    outline: none;
+}
+
+.container{
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    padding: 60px;
+}
+
+img{
+    width: 45%;
+}

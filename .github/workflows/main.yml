@@ -57,12 +57,18 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.node-version }}
+      - name: Install Chromium dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libnss3 libxss1 libasound2 libatk-bridge2.0-0 libcups2 libxcomposite1 libxrandr2 libpangocairo-1.0-0
       - name: Download cached dependencies
         uses: actions/cache@v3
         id: cache
         with:
           path: frontend/node_modules
           key: ${{ needs.install-deps.outputs.deps-cache-key }}
+      - name: Lint the code
+        run: npm run lint
       - name: Testing
         run: npm run test
       

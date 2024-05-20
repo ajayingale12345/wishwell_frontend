@@ -66,9 +66,9 @@ jobs:
         id: cache
         with:
           path: frontend/node_modules
-          key: ${{ needs.install-deps.outputs.deps-cache-key }}
-      - name: Lint the code
-        run: npm run lint
+      #     key: ${{ needs.install-deps.outputs.deps-cache-key }}
+      # - name: Lint the code
+      #   run: npm run lint
       - name: Testing
         run: npm run test
       

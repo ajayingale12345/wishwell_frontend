@@ -151,6 +151,23 @@ jobs:
         with:
           name: SBOM result
           path: dependency-results.sbom.json
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: code test
+          args: --sarif-file-output=snyk.sarif
+
+      - name: List directory contents
+        run: ls -la
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snyk.sarif
+          category: my-analysis-tool
 
  
         

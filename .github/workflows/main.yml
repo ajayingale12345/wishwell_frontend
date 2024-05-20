@@ -66,6 +66,23 @@ jobs:
         run: npm ci
       - name: Build the project
         run: npm run build
+          
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v2
+        with:
+          projectBaseDir: backend
+          args: >
+            -Dsonar.projectKey=ajayingale12345_wishwell-frontend
+            -Dsonar.projectName=wishwell_frontend
+            -Dsonar.organization=ajayingale12345
+            -Dsonar.sources=src
+            -Dsonar.test.inclusions=**/*.spec.ts
+            -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts
+            -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
  
         
       

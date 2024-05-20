@@ -70,7 +70,7 @@ jobs:
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v2
         with:
-          projectBaseDir: backend
+          projectBaseDir: frontend
           args: >
             -Dsonar.projectKey=ajayingale12345_wishwell-frontend
             -Dsonar.projectName=wishwell_frontend

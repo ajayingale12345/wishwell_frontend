@@ -164,8 +164,8 @@ jobs:
 
       - name: List directory contents
         run: |
-         cd  github/workspace
-         ls
+             la -a
+  
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3

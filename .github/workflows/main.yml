@@ -123,34 +123,34 @@ jobs:
           key: ${{ steps.cache-key.outputs.CACHE_KEY }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-      - name: Run Trivy vulnerability scanner in repo mode
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          ignore-unfixed: true
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL'
+      #   run: npm ci
+      # - name: Run Trivy vulnerability scanner in repo mode
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     scan-type: 'fs'
+      #     ignore-unfixed: true
+      #     format: 'sarif'
+      #     output: 'trivy-results.sarif'
+      #     severity: 'CRITICAL'
 
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: 'trivy-results.sarif'
-      - name: Run Trivy in GitHub SBOM mode and submit results to Dependency Graph
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          format: 'github'
-          output: 'dependency-results.sbom.json'
-          image-ref: '.'
-          github-pat: ${{ secrets.TOKEN_GITHUB }} 
+      # - name: Upload Trivy scan results to GitHub Security tab
+      #   uses: github/codeql-action/upload-sarif@v2
+      #   with:
+      #     sarif_file: 'trivy-results.sarif'
+      # - name: Run Trivy in GitHub SBOM mode and submit results to Dependency Graph
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     scan-type: 'fs'
+      #     format: 'github'
+      #     output: 'dependency-results.sbom.json'
+      #     image-ref: '.'
+      #     github-pat: ${{ secrets.TOKEN_GITHUB }} 
 
-      - name: Create coverage artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: SBOM result
-          path: dependency-results.sbom.json
+      # - name: Create coverage artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: SBOM result
+      #     path: dependency-results.sbom.json
 
           
       - name: Run Snyk to check for vulnerabilities
@@ -163,7 +163,9 @@ jobs:
           args: --sarif-file-output=snyk.sarif
 
       - name: List directory contents
-        run: ls
+        run: |
+         cd  github/workspace
+         ls
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3

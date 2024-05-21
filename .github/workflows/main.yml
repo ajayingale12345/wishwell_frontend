@@ -123,7 +123,7 @@ jobs:
           key: ${{ steps.cache-key.outputs.CACHE_KEY }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-      #   run: npm ci
+        run: npm ci
       # - name: Run Trivy vulnerability scanner in repo mode
       #   uses: aquasecurity/trivy-action@master
       #   with:

@@ -248,7 +248,7 @@ jobs:
       - name: List directory contents before converting report
         run: ls -la
       - name: Convert Trivy JSON report to HTML
-        run: trivy -q fs --format template --template @html.tpl -o trivy-report.html dependency-results.sbom.json
+        run: trivy -q fs --format template --template @html.tpl -o trivy-report.html frontend/dependency-results.sbom.json
       - name: List directory contents after converting report
         run: ls -la
       - name: Upload Trivy HTML report

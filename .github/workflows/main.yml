@@ -147,7 +147,12 @@ jobs:
           github-pat: ${{ secrets.TOKEN_GITHUB }} 
       - name: Download HTML template for Trivy report
         run: curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl > html.tpl
-
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.40.0/trivy_0.40.0_Linux-64bit.deb
+          sudo dpkg -i trivy_0.40.0_Linux-64bit.deb
       - name: Convert Trivy JSON report to HTML
         run: trivy -q fs --format template --template @html.tpl -o trivy-report.html .
 

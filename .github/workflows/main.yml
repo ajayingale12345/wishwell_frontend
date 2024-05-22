@@ -145,6 +145,17 @@ jobs:
           output: 'dependency-results.sbom.json'
           image-ref: '.'
           github-pat: ${{ secrets.TOKEN_GITHUB }} 
+      - name: Download HTML template for Trivy report
+        run: curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl > html.tpl
+
+      - name: Convert Trivy JSON report to HTML
+        run: trivy -q fs --format template --template @html.tpl -o trivy-report.html .
+
+      - name: Upload Trivy HTML report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Trivy HTML Report
+          path: trivy-report.html
 
       - name: Create coverage artifact
         uses: actions/upload-artifact@v2

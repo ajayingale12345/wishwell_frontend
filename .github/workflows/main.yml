@@ -188,7 +188,7 @@ jobs:
 
       - name: List directory contents
         run: |
-             ls la
+             ls 
   
       # - name: Print Snyk report
       #   run: cat test.sarif  

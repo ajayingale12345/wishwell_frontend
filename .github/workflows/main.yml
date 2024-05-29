@@ -180,7 +180,7 @@ jobs:
 
       - name: List directory contents
         run: |
-             ls -a
+             ls la
   
 
       - name: Upload SARIF file

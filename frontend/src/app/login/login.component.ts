@@ -28,6 +28,8 @@ export class LoginComponent {
       password: this.password
     };
 
+    const API_KEY ='1234556'
+
     this.serviceBackend.loginPost(loginData)
       .then(response => {
         console.log('Login successful:', response.data);

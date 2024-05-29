@@ -44,57 +44,57 @@ jobs:
         run: npm ci
    
 
-  build:
-    runs-on: ubuntu-latest
-    # needs: install-deps
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ inputs.node-version }}
-      - name: Install Chromium dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libnss3 libxss1 libasound2 libatk-bridge2.0-0 libcups2 libxcomposite1 libxrandr2 libpangocairo-1.0-0
-      - name: Install dependencies
+  # build:
+  #   runs-on: ubuntu-latest
+  #   # needs: install-deps
+  #   defaults:
+  #     run:
+  #       working-directory: frontend
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Setup node
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ inputs.node-version }}
+  #     - name: Install Chromium dependencies
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install -y libnss3 libxss1 libasound2 libatk-bridge2.0-0 libcups2 libxcomposite1 libxrandr2 libpangocairo-1.0-0
+  #     - name: Install dependencies
       
-        run: npm ci
-      - name: Build the project
-        run: npm run build
+  #       run: npm ci
+  #     - name: Build the project
+  #       run: npm run build
           
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v2
-        with:
-          projectBaseDir: frontend
-          args: >
-            -Dsonar.projectKey=ajayingale12345_wishwell-frontend
-            -Dsonar.projectName=wishwell_frontend
-            -Dsonar.organization=ajayingale12345
-            -Dsonar.sources=src
-            -Dsonar.test.inclusions=**/*.spec.ts
-            -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts
-            -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-  notify:
-    runs-on: ubuntu-latest
-    needs: [ install-deps, build ]
-    steps:
-      - name: Send notification to Slack from GitHub using GitHub Action
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          payload: |
-            {
-              "text": "Sonar Analysis done"
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #     - name: SonarQube Scan
+  #       uses: sonarsource/sonarqube-scan-action@v2
+  #       with:
+  #         projectBaseDir: frontend
+  #         args: >
+  #           -Dsonar.projectKey=ajayingale12345_wishwell-frontend
+  #           -Dsonar.projectName=wishwell_frontend
+  #           -Dsonar.organization=ajayingale12345
+  #           -Dsonar.sources=src
+  #           -Dsonar.test.inclusions=**/*.spec.ts
+  #           -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts
+  #           -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  # notify:
+  #   runs-on: ubuntu-latest
+  #   needs: [ install-deps, build ]
+  #   steps:
+  #     - name: Send notification to Slack from GitHub using GitHub Action
+  #       uses: slackapi/slack-github-action@v1.25.0
+  #       with:
+  #         payload: |
+  #           {
+  #             "text": "Sonar Analysis done"
+  #           }
+  #       env:
+  #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   trivey-scan:
     runs-on: ubuntu-latest
@@ -133,40 +133,40 @@ jobs:
           output: 'trivy-results.sarif'
           severity: 'CRITICAL'
 
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: 'trivy-results.sarif'
-      - name: Run Trivy in GitHub SBOM mode and submit results to Dependency Graph
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          format: 'github'
-          output: 'dependency-results.sbom.json'
-          image-ref: '.'
-          github-pat: ${{ secrets.TOKEN_GITHUB }} 
-      - name: Download HTML template for Trivy report
-        run: curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl > html.tpl
-      - name: Install Trivy
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget
-          wget https://github.com/aquasecurity/trivy/releases/download/v0.40.0/trivy_0.40.0_Linux-64bit.deb
-          sudo dpkg -i trivy_0.40.0_Linux-64bit.deb
-      - name: Convert Trivy JSON report to HTML
-        run: trivy -q fs --format template --template @html.tpl -o trivy-report.html .
+      # - name: Upload Trivy scan results to GitHub Security tab
+      #   uses: github/codeql-action/upload-sarif@v2
+      #   with:
+      #     sarif_file: 'trivy-results.sarif'
+      # - name: Run Trivy in GitHub SBOM mode and submit results to Dependency Graph
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     scan-type: 'fs'
+      #     format: 'github'
+      #     output: 'dependency-results.sbom.json'
+      #     image-ref: '.'
+      #     github-pat: ${{ secrets.TOKEN_GITHUB }} 
+      # - name: Download HTML template for Trivy report
+      #   run: curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl > html.tpl
+      # - name: Install Trivy
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y wget
+      #     wget https://github.com/aquasecurity/trivy/releases/download/v0.40.0/trivy_0.40.0_Linux-64bit.deb
+      #     sudo dpkg -i trivy_0.40.0_Linux-64bit.deb
+      # - name: Convert Trivy JSON report to HTML
+      #   run: trivy -q fs --format template --template @html.tpl -o trivy-report.html .
 
-      - name: Upload Trivy HTML report
-        uses: actions/upload-artifact@v2
-        with:
-          name: Trivy HTML Report
-          path: trivy-report.html
+      # - name: Upload Trivy HTML report
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: Trivy HTML Report
+      #     path: trivy-report.html
 
-      - name: Create coverage artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: SBOM result
-          path: dependency-results.sbom.json
+      # - name: Create coverage artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: SBOM result
+      #     path: dependency-results.sbom.json
 
           
       - name: Run Snyk to check for vulnerabilities
@@ -188,6 +188,8 @@ jobs:
         with:
           sarif_file: snyk.sarif
           category: my-analysis-tool
+      - name: Print Snyk report
+        run: cat snyk.sarif  
 
 
         

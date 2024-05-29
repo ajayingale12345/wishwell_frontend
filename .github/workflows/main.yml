@@ -16,32 +16,32 @@ on:
         default: '20.x'
 
 jobs:
-  install-deps:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
-    outputs:
-      deps-cache-key: ${{ steps.cache-key.outputs.CACHE_KEY }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ inputs.node-version }}
-      - name: Calculate Cache-key
-        id: cache-key
-        run: echo "CACHE_KEY=deep-node-modules-${{ hashfiles('frontend/package-lock.json') }}" >> "$GITHUB_OUTPUT"
-      - name: Download cached dependencies
-        uses: actions/cache@v3
-        id: cache
-        with:
-          path: frontend/node_modules
-          key: ${{ steps.cache-key.outputs.CACHE_KEY }}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+  # install-deps:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: frontend
+  #   outputs:
+  #     deps-cache-key: ${{ steps.cache-key.outputs.CACHE_KEY }}
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Setup node
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ inputs.node-version }}
+  #     - name: Calculate Cache-key
+  #       id: cache-key
+  #       run: echo "CACHE_KEY=deep-node-modules-${{ hashfiles('frontend/package-lock.json') }}" >> "$GITHUB_OUTPUT"
+  #     - name: Download cached dependencies
+  #       uses: actions/cache@v3
+  #       id: cache
+  #       with:
+  #         path: frontend/node_modules
+  #         key: ${{ steps.cache-key.outputs.CACHE_KEY }}
+  #     - name: Install dependencies
+  #       if: steps.cache.outputs.cache-hit != 'true'
+  #       run: npm ci
    
 
   # build:
@@ -169,27 +169,28 @@ jobs:
       #     path: dependency-results.sbom.json
 
           
+
+
+      
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
-        continue-on-error: true
+        continue-on-error: true # To make sure that SARIF upload gets called
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: code test
-          args: --sarif-file-output=snyk.sarif
+          args: --sarif-file-output=test.sarif
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: test.sarif
+          category: my-analysis-tool
 
       - name: List directory contents
         run: |
              ls la
   
-
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: snyk.sarif
-          category: my-analysis-tool
       - name: Print Snyk report
-        run: cat snyk.sarif  
+        run: cat test.sarif  
 
 
         

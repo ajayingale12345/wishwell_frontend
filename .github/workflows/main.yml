@@ -178,19 +178,19 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --sarif-file-output=test.sarif
+          args: --sarif-file-output=snyk.sarif
       - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: test.sarif
+          sarif_file: snyk.sarif
           category: my-analysis-tool
 
       - name: List directory contents
         run: |
              ls la
   
-      - name: Print Snyk report
-        run: cat test.sarif  
+      # - name: Print Snyk report
+      #   run: cat test.sarif  
 
 
         
